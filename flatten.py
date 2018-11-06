@@ -3,6 +3,8 @@
 import sys
 from collections import defaultdict
 
+from math import isnan
+
 # todo
 # interval based summary
 # tall vs wide vs super wide output
@@ -39,6 +41,8 @@ for line in open(path):
     weight = int(line[5])
     dbm = [float(d) for d in line[6:]]
     for f,d in zip(frange(low, high, step), dbm):
+        if isnan(d):
+            continue
         sums[f] += d*weight
         counts[f] += weight
 
@@ -48,5 +52,4 @@ for f in sums:
 
 for f in sorted(ave):
     print(','.join([str(f), str(ave[f])]))
-    
 
